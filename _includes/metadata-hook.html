@@ -1,0 +1,142 @@
+<!--
+  Language selection. English is built at the root and Spanish under /es (see _config_es.yml).
+  A choice saved with the EN | ES switch in the top bar wins; otherwise visitors whose browser
+  prefers any Spanish variant (es, es-AR, es-419, ...) go to /es and everyone else stays in English.
+-->
+<style>
+  #lang-switch {
+    display: flex;
+    align-items: stretch;
+    flex-shrink: 0;
+    height: 2rem; /* same height as the search box */
+    margin-left: auto;
+    margin-right: 0.75rem;
+    border: 1px solid var(--search-border-color);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  #lang-switch button {
+    border: 0;
+    background: none;
+    padding: 0 0.7rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    color: var(--text-muted-color);
+  }
+
+  #lang-switch button:hover {
+    color: var(--link-color);
+  }
+
+  #lang-switch button[aria-pressed='true'] {
+    background: var(--search-border-color);
+    color: var(--topbar-text-color);
+    cursor: default;
+  }
+
+  /* Mobile title (hidden on desktop): left-aligned next to the menu button, so the switch never pushes it off-center. */
+  #topbar-title {
+    flex: 1;
+    width: auto;
+    margin-left: 0.25rem;
+    text-align: left;
+  }
+
+  /* On mobile the search bar takes over the whole top bar while it is open. */
+  #topbar:has(#search-cancel.d-block) #lang-switch {
+    display: none;
+  }
+</style>
+<script>
+  (function () {
+    var ES_BASE = '/es';
+    var KEY = 'site-lang';
+    var current = '{% if site.lang contains "es" %}es{% else %}en{% endif %}';
+    /* Pages that always exist in both languages, so switching needs no check. */
+    var SHARED = ['/', '/about/', '/categories/', '/tags/', '/archives/'];
+
+    function pathIn(lang) {
+      var path = location.pathname;
+      var bare = current === 'es' ? path.slice(ES_BASE.length) || '/' : path;
+      return lang === 'es' ? ES_BASE + bare : bare;
+    }
+
+    function go(lang, homeIfMissing) {
+      var path = pathIn(lang);
+      var target = path + location.search + location.hash;
+      var bare = lang === 'es' ? path.slice(ES_BASE.length) : path;
+
+      if (SHARED.indexOf(bare) !== -1) {
+        location.replace(target);
+        return;
+      }
+      /* Posts may exist in only one language: switch only if the translation is there. */
+      fetch(path, { method: 'HEAD' })
+        .then(function (r) {
+          if (r.ok) {
+            location.replace(target);
+          } else if (homeIfMissing) {
+            location.assign(lang === 'es' ? ES_BASE + '/' : '/');
+          }
+        })
+        .catch(function () {});
+    }
+
+    function saved() {
+      try {
+        return localStorage.getItem(KEY);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function detected() {
+      var pref = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+      return /^es\b/i.test(pref) ? 'es' : 'en';
+    }
+
+    var wanted = saved() || detected();
+    if (wanted !== current) {
+      go(wanted, false);
+    }
+
+    /* EN | ES switch in the top bar, right before the search (desktop) or the search button (mobile). */
+    function mountSwitch() {
+      var anchor = document.getElementById('search-trigger');
+      if (!anchor || document.getElementById('lang-switch')) return;
+
+      var wrap = document.createElement('div');
+      wrap.id = 'lang-switch';
+      wrap.setAttribute('role', 'group');
+      wrap.setAttribute('aria-label', current === 'es' ? 'Idioma' : 'Language');
+
+      ['en', 'es'].forEach(function (lang) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.lang = lang;
+        btn.textContent = lang.toUpperCase();
+        btn.title = lang === 'es' ? 'Español' : 'English';
+        btn.setAttribute('aria-pressed', String(lang === current));
+        btn.addEventListener('click', function () {
+          if (lang === current) return;
+          try {
+            localStorage.setItem(KEY, lang);
+          } catch (e) {}
+          go(lang, true);
+        });
+        wrap.appendChild(btn);
+      });
+
+      anchor.before(wrap);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mountSwitch);
+    } else {
+      mountSwitch();
+    }
+  })();
+</script>

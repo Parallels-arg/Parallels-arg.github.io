@@ -1,0 +1,18 @@
+# Spanish build, layered on top of _config.yml:
+#   bundle exec jekyll b --config _config.yml,_config_es.yml -d _site/es
+
+lang: es-ES
+
+
+description: >-
+  Bruno Echagüe (Parallels-arg): desarrollador de software y analista de sistemas. Writeups de CTF y HackTheBox, ingeniería inversa y notas de ciberseguridad.
+
+baseurl: "/es"
+
+collections_dir: content/es
+
+pwa:
+  enabled: true
+  cache:
+    enabled: true
+    deny_paths:
