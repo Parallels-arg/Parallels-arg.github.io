@@ -1,12 +1,10 @@
 ---
 # the default layout is 'page'
 icon: fas fa-info-circle
-order: 4
+order: 3
 ---
 
-## Hi, I'm Bruno
-
-Software developer from Buenos Aires. On this blog I publish CTF and machine writeups, reverse engineering and
+I'm Bruno, a software developer from Buenos Aires. On this blog I publish CTF and machine writeups, reverse engineering and
 cybersecurity notes.
 
 Cybersecurity is what got me into programming. After several years building enterprise systems, I'm getting back to it
@@ -17,6 +15,8 @@ through crackmes, CTFs and security events.
 - **Writeups:** HackTheBox and TryHackMe machines and CTF challenges, step by step.
 - **Reversing:** crackmes and binary analysis.
 - **Notes:** techniques and cheatsheets I use often.
+
+Everything published so far is in the [archive]({{ "/archives/" | relative_url }}).
 
 ## About the writeups
 

@@ -1,4 +1,5 @@
-# Copied from jekyll-theme-chirpy v7.6.0 to change the content license to CC BY-NC 4.0.
+# Copied from jekyll-theme-chirpy v7.6.0 (es-ES) to change the content license to CC BY-NC 4.0
+# and adapt the wording to Rioplatense Spanish. The `custom` block at the end is used by this site's own templates.
 # The layout text of site
 
 # ----- Commons label -----
@@ -15,13 +16,13 @@ tabs:
   categories: Categorías
   tags: Etiquetas
   archives: Archivo
-  about: Acerca de
+  about: Sobre mí
 
 # the text displayed in the search bar & search results
 search:
   hint: Buscar
   cancel: Cancelar
-  no_results: ¡Oops! No se encuentran resultados.
+  no_results: Sin resultados. Probá con otra palabra o mirá las categorías.
 
 panel:
   lastmod: Actualizado recientemente
@@ -44,7 +45,7 @@ copyright:
 meta: Hecho con :PLATFORM usando el tema :THEME
 
 not_found:
-  statement: Lo sentimos, hemos perdido esa URL o apunta a algo que no existe.
+  statement: Esta página no existe o se movió.
 
 notification:
   update_found: Hay contenido nuevo
@@ -66,11 +67,11 @@ post:
   read_time:
     unit: min
     prompt: " de lectura"
-  edit: Edita esta entrada
+  edit: Editar esta entrada
   relate_posts: Lecturas adicionales
   share: Compartir
   button:
-    next: Nuevo
+    next: Siguiente
     previous: Anterior
     copy_code:
       succeed: ¡Copiado!
@@ -80,5 +81,29 @@ post:
 
 # categories page
 categories:
-  category_measure: categorias
+  category_measure: categorías
   post_measure: entradas
+
+# ----- Custom labels (this site's templates, not Chirpy) -----
+
+custom:
+  skip: Saltar al contenido
+  intro: >-
+    Desarrollador de software en Buenos Aires, volviendo a la seguridad ofensiva. Escribo writeups de
+    máquinas retiradas de HackTheBox y TryHackMe, crackmes y reversing, y tomo notas de lo que aprendo.
+  about: Sobre mí
+  latest: Últimos posts
+  menu: Menú
+  search: Buscar
+  close: Cerrar
+  theme: Tema
+  back_to_top: Volver arriba
+  main: Contenido principal
+  post_nav: Más posts
+  sidebar: Barra lateral
+  panel: Panel lateral
+  topbar: Barra superior
+  breadcrumb: Ruta de navegación
+  footer: Información del sitio
+  result: resultado
+  results: resultados

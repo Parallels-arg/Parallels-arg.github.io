@@ -1,7 +1,7 @@
 # Spanish build, layered on top of _config.yml:
 #   bundle exec jekyll b --config _config.yml,_config_es.yml -d _site/es
 
-lang: es-ES
+lang: es-AR
 
 
 description: >-

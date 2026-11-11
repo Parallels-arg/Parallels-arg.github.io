@@ -1,4 +1,5 @@
-# Copied from jekyll-theme-chirpy v7.6.0 to change the content license to CC BY-NC 4.0.
+# Copied from jekyll-theme-chirpy v7.6.0 to change the content license to CC BY-NC 4.0
+# and the search empty state. The `custom` block at the end is used by this site's own templates.
 # The layout text of site
 
 # ----- Commons label -----
@@ -21,7 +22,7 @@ tabs:
 search:
   hint: search
   cancel: Cancel
-  no_results: Oops! No results found.
+  no_results: No results. Try another word, or browse the categories.
 
 panel:
   lastmod: Recently Updated
@@ -96,3 +97,27 @@ categories:
   post_measure:
     singular: post
     plural: posts
+
+# ----- Custom labels (this site's templates, not Chirpy) -----
+
+custom:
+  skip: Skip to content
+  intro: >-
+    Software developer in Buenos Aires, getting back into offensive security. I write up retired
+    HackTheBox and TryHackMe machines, crackmes and reversing, and keep notes on what I learn.
+  about: About me
+  latest: Latest posts
+  menu: Menu
+  search: Search
+  close: Close
+  theme: Theme
+  back_to_top: Back to top
+  main: Main content
+  post_nav: More posts
+  sidebar: Sidebar
+  panel: Side panel
+  topbar: Top bar
+  breadcrumb: Breadcrumb
+  footer: Site info
+  result: result
+  results: results
