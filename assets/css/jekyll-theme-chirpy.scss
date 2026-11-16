@@ -1,0 +1,528 @@
+---
+---
+
+/*
+  Site stylesheet: Chirpy v7.6.0 plus this blog's identity.
+  Direction: terminal / phosphor amber. Headings, labels and metadata are set in JetBrains Mono,
+  long-form reading stays in Source Sans Pro. One accent (amber), tuned per theme for contrast.
+*/
+
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}',
+  $font-family-heading: ('JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace)
+);
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* ---------- Tokens ---------- */
+
+@mixin light-tokens {
+  --accent: #9a4f00; /* 5.9:1 on --main-bg */
+  --accent-soft: rgb(154 79 0 / 12%);
+  --on-accent: #ffffff;
+
+  --main-bg: #fcfcfa;
+  --main-border-color: #e6e4de;
+  --text-color: #2d2c29;
+  --text-muted-color: #6b6963;
+  --heading-color: #161512;
+  --label-color: #4f4d48;
+  --link-color: var(--accent);
+  --link-underline-color: rgb(154 79 0 / 35%);
+  --blockquote-border-color: #dedcd5;
+
+  --site-title-color: #161512;
+  --site-subtitle-color: var(--accent);
+  --sidebar-bg: #f3f2ee;
+  --sidebar-border-color: #e3e1da;
+  --sidebar-muted-color: #4f4d48;
+  --sidebar-active-color: var(--accent);
+  --sidebar-hover-bg: #e9e7e1;
+  --sidebar-btn-bg: #e9e7e1;
+  --sidebar-btn-color: #4f4d48;
+
+  --topbar-bg: rgb(252 252 250 / 72%);
+  --search-border-color: #dedcd5;
+  --input-focus-border-color: var(--accent);
+
+  --card-bg: #ffffff;
+  --button-bg: #ffffff;
+  --card-hover-bg: #f3f2ee;
+  --card-shadow: rgb(22 21 18 / 6%) 0 2px 8px 0, rgb(22 21 18 / 9%) 0 0 0 1px;
+  --toc-highlight: var(--accent);
+  --btn-share-color: #6b6963;
+  --btn-share-hover-color: var(--accent);
+  --tag-hover: #f0e6da;
+  --timeline-node-bg: #b8b5ad;
+}
+
+@mixin dark-tokens {
+  --accent: #ffb547; /* 10.7:1 on --main-bg */
+  --accent-soft: rgb(255 181 71 / 12%);
+  --on-accent: #101113;
+
+  --main-bg: #101113;
+  --main-border-color: #23252a;
+  --text-color: #c8c6c0;
+  --text-muted-color: #8e8d88; /* 5.7:1 */
+  --heading-color: #ecebe6;
+  --label-color: #a3a29c;
+  --link-color: var(--accent);
+  --link-underline-color: rgb(255 181 71 / 35%);
+  --blockquote-border-color: #2a2c31;
+  --blockquote-text-color: #8e8d88;
+
+  --site-title-color: #ecebe6;
+  --site-subtitle-color: var(--accent);
+  --sidebar-bg: #141518;
+  --sidebar-border-color: #202227;
+  --sidebar-muted-color: #a3a29c; /* 7.1:1 */
+  --sidebar-active-color: var(--accent);
+  --sidebar-hover-bg: #1c1d21;
+  --sidebar-btn-bg: #1c1d21;
+  --sidebar-btn-color: #a3a29c;
+
+  --topbar-bg: rgb(16 17 19 / 72%);
+  --search-border-color: #2a2c31;
+  --search-icon-color: #8e8d88;
+  --input-focus-border-color: var(--accent);
+
+  --card-bg: #17181b;
+  --card-header-bg: #1c1d21;
+  --button-bg: #17181b;
+  --card-hover-bg: #1e1f23;
+  --card-shadow: rgb(0 0 0 / 45%) 0 6px 18px 0, rgb(255 255 255 / 6%) 0 0 0 1px;
+  --toc-highlight: var(--accent);
+  --btn-share-color: #8e8d88;
+  --btn-share-hover-color: var(--accent);
+  --tag-hover: #2a2418;
+  --highlight-bg-color: #0b0c0e;
+  --timeline-node-bg: #6b6a66;
+  --timeline-color: #2a2c31;
+  --menu-bg: #17181b;
+}
+
+:root[data-bs-theme='light'] {
+  @include light-tokens;
+}
+
+:root[data-bs-theme='dark'] {
+  @include dark-tokens;
+}
+
+:root:not([data-bs-theme]) {
+  @media (prefers-color-scheme: light) {
+    @include light-tokens;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @include dark-tokens;
+  }
+}
+
+/* ---------- Type ---------- */
+
+$mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.card-title,
+#sidebar .site-title,
+#topbar-title,
+.post-list-heading,
+#archives .year,
+.categories .card-header a {
+  font-family: $mono;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.content p,
+.content li {
+  text-wrap: pretty;
+}
+
+/* Labels and metadata: data, handles and dates, so they read as machine output. */
+#sidebar .site-subtitle,
+#sidebar .nav-link span,
+#breadcrumb,
+.post-meta,
+.post-tail-wrapper,
+#lang-switch button,
+.intro-links a,
+#toc-solo-trigger .label,
+.share-label,
+footer {
+  font-family: $mono;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: $mono;
+}
+
+/* ---------- Browser surfaces ---------- */
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+html {
+  caret-color: var(--accent);
+  scrollbar-color: var(--search-border-color) transparent;
+  accent-color: var(--accent);
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+/* One visible focus treatment for everything the keyboard can reach. */
+:focus-visible {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
+#search-input:focus-visible,
+#search-input:focus {
+  outline: none !important;
+}
+
+#search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+main:focus {
+  outline: none;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.6rem 1rem;
+  font-family: $mono;
+  font-size: 0.875rem;
+  background: var(--accent);
+  color: var(--on-accent) !important;
+  border-radius: 6px;
+  transform: translateY(-200%);
+
+  &:focus {
+    transform: none;
+  }
+}
+
+/* ---------- Sidebar ---------- */
+
+#sidebar {
+  .site-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .site-subtitle {
+    font-style: normal !important;
+    font-size: 0.9rem;
+  }
+
+  ul > li.nav-item {
+    opacity: 1;
+
+    a.nav-link span {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  ul > li.nav-item.active .nav-link {
+    color: var(--sidebar-active-color);
+  }
+}
+
+/* ---------- Home intro ---------- */
+
+#intro {
+  padding: 2.5rem 0 2rem;
+  margin: 0 0.25rem 1.5rem;
+  border-bottom: 1px solid var(--main-border-color);
+
+  @media (min-width: 768px) {
+    padding-top: 3.5rem;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 1rem;
+    color: var(--heading-color);
+  }
+
+  .intro-lead {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    max-width: 60ch;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+  }
+
+  .intro-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 1.1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--accent);
+      transition: background-color 0.2s ease-out, color 0.2s ease-out;
+
+      &:first-child {
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+
+      &:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+    }
+  }
+}
+
+/* The one moving thing on the site: a block cursor after the name. */
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-left: 0.12em;
+  vertical-align: -0.08em;
+  background: var(--accent);
+  animation: cursor-blink 1.1s steps(1, end) infinite;
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}
+
+.post-list-heading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted-color);
+  margin: 0 0.25rem 1rem;
+}
+
+#post-list .card-wrapper .card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* ---------- Posts ---------- */
+
+article > header h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.content {
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+  }
+
+  /* Prose keeps a readable measure; code blocks, tables and images still use the full width. */
+  > p,
+  > ul,
+  > ol,
+  > blockquote {
+    max-width: 72ch;
+  }
+}
+
+/* The summary under a post title is prose, not a heading. */
+.post-desc {
+  font-family: 'Source Sans Pro', 'Microsoft Yahei', sans-serif !important;
+  font-size: 1.15rem;
+  font-weight: 400 !important;
+  color: var(--text-muted-color);
+}
+
+.post-navigation span:empty {
+  flex: 1;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  font-size: 0.8rem;
+
+  p:last-child {
+    font-size: 0.75rem;
+  }
+}
+
+/* ---------- Language switch (markup injected by _includes/metadata-hook.html) ---------- */
+
+#lang-switch {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  gap: 2px;
+  height: 2rem; /* same height as the search box */
+  margin-left: auto;
+  margin-right: 0.75rem;
+  padding: 2px;
+  border: 1px solid var(--search-border-color);
+  border-radius: 6px;
+
+  button {
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    padding: 0 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    color: var(--text-muted-color);
+    transition: color 0.2s ease-out, background-color 0.2s ease-out;
+
+    &:hover {
+      color: var(--accent);
+    }
+
+    &[aria-pressed='true'] {
+      background: var(--accent-soft);
+      color: var(--accent);
+      cursor: default;
+    }
+  }
+
+  &[aria-busy='true'] {
+    cursor: progress;
+
+    button {
+      pointer-events: none;
+    }
+
+    button[data-pending] {
+      animation: cursor-blink 0.8s steps(1, end) infinite;
+    }
+  }
+}
+
+/* Mobile title (hidden on desktop): left-aligned next to the menu button. */
+#topbar-title {
+  flex: 1;
+  width: auto;
+  margin-left: 0.25rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* On mobile the search bar takes over the whole top bar while it is open. */
+#topbar:has(#search-cancel.d-block) #lang-switch {
+  display: none;
+}
+
+/* ---------- Touch targets ---------- */
+
+@media (pointer: coarse) {
+  /* Full-size targets on touch screens; the pressed state alone marks the current language. */
+  #lang-switch {
+    height: auto;
+    padding: 0;
+    border: 0;
+    gap: 4px;
+
+    button {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 6px;
+    }
+  }
+
+  #sidebar-trigger,
+  #search-trigger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* 44px circles fit on one row once the theme's 0.8rem margins and the dot separator go. */
+  #sidebar .sidebar-bottom {
+    flex-wrap: nowrap !important;
+    gap: 0.5rem;
+    padding-left: 1.5rem;
+
+    > a,
+    #mode-toggle {
+      width: 44px;
+      height: 44px;
+      margin-right: 0 !important;
+      flex-shrink: 0;
+    }
+
+    .icon-border {
+      display: none;
+    }
+  }
+
+  .share-wrapper .share-icons {
+    a,
+    button {
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
